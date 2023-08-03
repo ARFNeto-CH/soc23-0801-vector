@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
+    <None Include="post.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="container.c">
