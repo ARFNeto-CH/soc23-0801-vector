@@ -97,7 +97,7 @@ int ctn_show(Container* col)
     if (col->show == NULL) return -1;  // no show function
     for (size_t i = 0; i < col->size; i += 1)
         col->show(col->item[i]);
-    printf("[end of listing]\n");
+    printf("\n    [end of listing]\n\n");
     return 0;
 }
 
