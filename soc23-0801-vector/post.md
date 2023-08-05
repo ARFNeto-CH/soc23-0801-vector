@@ -543,33 +543,79 @@ int print_int(void* book)
 
 ### `main.c` for a simple test ###    
 ```C
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "container.h"
+#include "item.h"
+
+int main(void)
+{
+    const int test_size = 80;
+    srand(20230801);  // seed for same results
+    Container* ctn =
+        ctn_create(test_size, copy_int, delete_int, print_int);
+    printf(
+        "\
+    Container created. empty() returned %d\n\
+    Test size is %d, Capacity is %d\n",
+        ctn_empty(ctn), test_size, ctn_capacity(ctn));
+    for (int id = 0; id < test_size; id += 1)
+    {
+        int* newb = create_int();
+        ctn_push_back(newb, ctn);
+        delete_int(newb);
+    };
+    ctn_show(ctn);
+    printf("    deleting last element\n");
+    ctn_pop_back(ctn);
+    ctn_show(ctn);  // now using _alt
+    printf("    clearing container\n");
+    ctn_clear(ctn);
+    ctn_show(ctn);  // now empty
+    printf("    destroying container\n");
+    ctn = ctn_destroy(ctn);  // delete all
+    printf("    show supposed empty container\n");
+    ctn_show(ctn);  // now empty
+    printf("    game over\n");
+    return 0;
+}
 ```    
 
-### Output: a run for 30 items ###    
+### Output: a run for 80 items ###    
 
 ```none
     Container created. empty() returned 1
-    Test size is 80, Capacity is 30
-    there are 30 of 30 items
+    Test size is 80, Capacity is 80
+    there are 80 of 80 items
 
            634   924   868   469   731   528   634   952   693   704
            342   473   847   792   406   467   412   503   901   588
            420   324   809   511   311   846   652   983   360   945
+           477   567   271   192   262   894   655   400   298   302
+           443   589   356   359   902   448   746   521   716   197
+           463   598   422   345   105   901   817   298   727   644
+           199   122   157   991   935   577   986   969   910   131
+           327   698   114   330   281   653   254   612   761   196
 
     [end of listing]
 
     deleting last element
-    pop_back(): size is now 29
-    there are 29 of 30 items
+    pop_back(): size is now 79
+    there are 79 of 80 items
 
            634   924   868   469   731   528   634   952   693   704
            342   473   847   792   406   467   412   503   901   588
-           420   324   809   511   311   846   652   983   360
+           420   324   809   511   311   846   652   983   360   945
+           477   567   271   192   262   894   655   400   298   302
+           443   589   356   359   902   448   746   521   716   197
+           463   598   422   345   105   901   817   298   727   644
+           199   122   157   991   935   577   986   969   910   131
+           327   698   114   330   281   653   254   612   761
     [end of listing]
 
     clearing container
-    there are 0 of 30 items
+    there are 0 of 80 items
 
 
     [end of listing]
