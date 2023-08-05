@@ -479,9 +479,114 @@ A container is created and a few tests are run.
     game over
 ``` 
 
-This is a simple way to implement any type of container. Just add the item definitions, write the functions and go.
+## A second simpler example: a container of `int` ## 
 
-To run just
+### `item.h` for a simple `int` collection ###    
+
+```C
+#pragma once
+#include <stdio.h>
+
+int   print_int(void*);
+void* copy_int(void*);
+void* create_int(void);
+void* delete_int(void*);
+```    
+
+Since is a basic type no need to reference an item or add a `struct`    
+### `item.c` ###    
+
+```C
+#include "item.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+void* copy_int(void* item)
+{
+    if (item == NULL) return NULL;
+    int* other = (int*)malloc(sizeof(int));
+    if (other == NULL) return NULL;
+    *other = *(int*)item;
+    return (void*)other;
+};
+
+void* create_int(void)
+{
+    static int id         = 100;
+    int* one      = (int*)malloc(sizeof(int));
+    *one = id+ + rand() % 900;
+    return (void*)one;
+};
+
+void* delete_int(void* book)
+{
+    free(book);
+    return NULL;
+}
+
+int print_int(void* book)
+{
+    static int col = 0;
+    if (book == NULL) return 0;
+    if (col == 0) printf("\t");
+    printf("%6d",*(int*)book);
+    col += 1;
+    if (col > 9)
+    {
+        printf("\n");
+        col = 0;
+    };
+    return 0;
+};
+``` 
+
+### `main.c` for a simple test ###    
+```C
+
+```    
+
+### Output: a run for 30 items ###    
+
+```none
+    Container created. empty() returned 1
+    Test size is 80, Capacity is 30
+    there are 30 of 30 items
+
+           634   924   868   469   731   528   634   952   693   704
+           342   473   847   792   406   467   412   503   901   588
+           420   324   809   511   311   846   652   983   360   945
+
+    [end of listing]
+
+    deleting last element
+    pop_back(): size is now 29
+    there are 29 of 30 items
+
+           634   924   868   469   731   528   634   952   693   704
+           342   473   847   792   406   467   412   503   901   588
+           420   324   809   511   311   846   652   983   360
+    [end of listing]
+
+    clearing container
+    there are 0 of 30 items
+
+
+    [end of listing]
+
+    destroying container
+    show supposed empty container
+    game over
+```    
+
+
+This is a simple way to implement a container. Just add the item definitions, write the functions and go. To run the example just add the 5 files. A project for Visual Studio is on [GitHub](https://github.com/ARFNeto-CH/soc23-0801-vector/tree/master)
+
+The container is added as a static library in the example: no need to even compile the container code to use it for a new type of item.
+
+
+
+
 
 
 

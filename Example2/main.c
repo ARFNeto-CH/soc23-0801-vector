@@ -9,7 +9,7 @@ int main(void)
     const int test_size = 80;
     srand(20230801);  // seed for same results
     Container* ctn =
-        ctn_create(30, copy_int, delete_int, print_int);
+        ctn_create(test_size, copy_int, delete_int, print_int);
     printf(
         "\
     Container created. empty() returned %d\n\
